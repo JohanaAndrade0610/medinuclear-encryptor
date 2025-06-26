@@ -1,0 +1,46 @@
+# Dependencias
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Archivos compilados
+dist/
+build/
+*.js.map
+
+# Archivos temporales
+tmp/
+*.tmp
+*.temp
+
+# Archivos de sistema
+.DS_Store
+Thumbs.db
+
+# IDE/Editor
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Logs
+logs/
+*.log
+
+# Archivos de entorno
+.env
+.env.local
+.env.production
+
+# Archivos de cliente (no subir carpeta de distribución)
+MEDINUCLEAR_Encriptador/
+
+# Archivos sensibles
+secrets/*.pem
+*.key
+*.enc
+
+# Cache
+.npm
+.cache/
