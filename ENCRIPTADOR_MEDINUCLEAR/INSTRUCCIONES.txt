@@ -6,7 +6,7 @@
 
 1. EJECUTAR EL PROGRAMA:
    - Eliminar la carpeta "tmp"
-   - Ejecutar "index-win.exe"
+   - Ejecutar el archivo "index-win.exe"
    - NO mover ni eliminar la carpeta "secrets"
 
 2. CIFRAR ARCHIVOS:

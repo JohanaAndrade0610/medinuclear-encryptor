@@ -5,7 +5,7 @@
 📋 CONTENIDO DEL PAQUETE:
 
 ├── index-win.exe          # Programa principal
-├── secrets/               # Carpeta con llave pública RSA (debe tener siempre la extensión .pem) y licencia
+├── secrets/               # Carpeta con llave pública RSA (debe tener siempre la extensión .pem) y licencia del programa
 │   └── rsa_public_mlls.pem
 │   └── licence.enc	
 ├── tmp/                   # Carpeta donde se guardan archivos encriptados
