@@ -14,7 +14,8 @@ async function generateLicense() {
       version: '1.0.0',
       authorizedMacs: [
         '4074E025CE39',
-        '4A58D0FA0A09'
+        '4A58D0FA0A09',
+        'CC4740E3F713'
       ],
     };
 

@@ -249,6 +249,7 @@ export class UserInterfaceService {
    */
   public showLicenseValidBanner(): void {
     this.bannerService.showMessage(this.messagesService.getSuccess('licenseValid'), 'success');
+    this.bannerService.showSectionSeparator();
   }
 
   /**

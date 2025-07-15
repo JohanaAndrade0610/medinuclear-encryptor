@@ -35,7 +35,7 @@ export interface Messages {
 export class MessagesService {
   private messages: Messages = {
     prompts: {
-      folderPath: '\n[+] Ingrese la ruta completa de la carpeta a cifrar:\n> ',
+      folderPath: '[+] Ingrese la ruta completa de la carpeta a cifrar:\n> ',
       continueProcessing: '\n¿Desea cifrar otra carpeta? (S/N): ',
       openOutputFolder: '\n[+] ¿Desea abrir la carpeta con los archivos cifrados? (S/N): ',
       exitMessage: 'Presione cualquier tecla para salir...'

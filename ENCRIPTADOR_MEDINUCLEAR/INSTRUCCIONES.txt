@@ -6,7 +6,7 @@
 
 1. EJECUTAR EL PROGRAMA:
    - Eliminar la carpeta "tmp"
-   - Ejecutar "index-win.exe" como administrador
+   - Ejecutar "index-win.exe"
    - NO mover ni eliminar la carpeta "secrets"
 
 2. CIFRAR ARCHIVOS:
@@ -17,11 +17,6 @@
 3. RESULTADOS:
    - Los archivos cifrados aparecerán en la carpeta "tmp"
    - Cada archivo tendrá extensión .enc y .key
-
-4. REQUISITOS:
-   - Windows 7 o superior
-   - NO requiere instalación adicional
-   - NO requiere Node.js ni Visual Studio
 
 ===============================================================
                     SOPORTE TÉCNICO

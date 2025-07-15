@@ -24,35 +24,6 @@ export class BannerService {
     return ' '.repeat(padding) + text;
   }
 
-
-  /**
-   * Configura la terminal para pantalla completa
-   */
-  private setFullScreen(): void {
-    if (process.platform === 'win32') {
-      try {
-        // Usar execSync para ejecutar inmediatamente
-        const { execSync } = require('child_process');
-        
-        // Comando PowerShell para maximizar la ventana de consola
-        const command = `powershell -WindowStyle Hidden -Command "Add-Type -TypeDefinition 'using System; using System.Runtime.InteropServices; public class Win32 { [DllImport(\\"user32.dll\\")] public static extern bool ShowWindow(IntPtr hWnd, int nCmdShow); [DllImport(\\"kernel32.dll\\")] public static extern IntPtr GetConsoleWindow(); }'; $console = [Win32]::GetConsoleWindow(); [Win32]::ShowWindow($console, 3)"`;
-        
-        execSync(command, { timeout: 2000 });
-        
-      } catch (error) {
-        // Si falla PowerShell, intentar con comandos de consola para redimensionar
-        try {
-          const { execSync } = require('child_process');
-          // Configurar un tamaño más grande de terminal
-          execSync('mode con cols=140 lines=50', { timeout: 1000 });
-        } catch {
-          // Si todo falla, continuar sin cambios
-        }
-      }
-    }
-    // No limpiar pantalla aquí para no borrar el banner
-  }
-
   /**
    * Restaura la terminal al estado normal
    */
@@ -65,10 +36,7 @@ export class BannerService {
    * Muestra el banner de bienvenida del sistema
    */
   public showWelcomeBanner(): void {
-    // Configurar pantalla completa antes de mostrar el banner
-    this.setFullScreen();
-    
-    // Limpiar pantalla después de maximizar
+    // Limpiar pantalla antes de mostrar el banner
     console.clear();
 
     const { reset, cyan, yellow, green, blue, navyBlue} = this.colors;

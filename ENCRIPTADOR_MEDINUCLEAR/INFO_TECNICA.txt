@@ -4,11 +4,12 @@
 
 📋 CONTENIDO DEL PAQUETE:
 
-├── index-win.exe          # Programa principal (ejecutar este archivo como administrador)
-├── secrets/               # Carpeta con llave pública RSA (debe tener siempre la extensión .pem)
+├── index-win.exe          # Programa principal
+├── secrets/               # Carpeta con llave pública RSA (debe tener siempre la extensión .pem) y licencia
 │   └── rsa_public_mlls.pem
+│   └── licence.enc	
 ├── tmp/                   # Carpeta donde se guardan archivos encriptados
-└── INSTRUCCIONES.txt      # Manual de usuario
+└── INSTRUCCIONES.txt      # Manual de usuario para el uso del encriptador
 
 ===============================================================
 
@@ -17,14 +18,6 @@
 - Cifrado híbrido RSA-2048 + AES-256
 - Claves AES únicas por archivo
 - Archivos originales NO se modifican
-
-===============================================================
-
-🖥️  COMPATIBILIDAD:
-
-✅ Windows 7, 8, 10, 11 (32-bit y 64-bit)
-✅ Windows Server 2012, 2016, 2019, 2022
-❌ Linux/macOS (contactar para versiones específicas)
 
 ===============================================================
 
@@ -42,5 +35,5 @@ Este software fue desarrollado específicamente para MEDINUCLEAR.
 Redistribución no autorizada.
 
 Versión: 1.0.0
-Fecha: Junio 2025
+Fecha: Julio 2025
 ===============================================================
