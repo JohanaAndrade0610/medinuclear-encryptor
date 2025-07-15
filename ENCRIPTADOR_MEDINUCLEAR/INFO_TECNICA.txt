@@ -1,0 +1,46 @@
+===============================================================
+              INFORMACIÓN TÉCNICA - MEDINUCLEAR
+===============================================================
+
+📋 CONTENIDO DEL PAQUETE:
+
+├── index-win.exe          # Programa principal (ejecutar este archivo como administrador)
+├── secrets/               # Carpeta con llave pública RSA (debe tener siempre la extensión .pem)
+│   └── rsa_public_mlls.pem
+├── tmp/                   # Carpeta donde se guardan archivos encriptados
+└── INSTRUCCIONES.txt      # Manual de usuario
+
+===============================================================
+
+🔒 ESPECIFICACIONES DE SEGURIDAD:
+
+- Cifrado híbrido RSA-2048 + AES-256
+- Claves AES únicas por archivo
+- Archivos originales NO se modifican
+
+===============================================================
+
+🖥️  COMPATIBILIDAD:
+
+✅ Windows 7, 8, 10, 11 (32-bit y 64-bit)
+✅ Windows Server 2012, 2016, 2019, 2022
+❌ Linux/macOS (contactar para versiones específicas)
+
+===============================================================
+
+📁 ESTRUCTURA DE SALIDA:
+
+Para cada archivo original se generan 2 archivos:
+- archivo.ext.enc  (archivo encriptado)
+- archivo.ext.key  (clave para descifrar)
+
+===============================================================
+
+⚠️  NOTA IMPORTANTE:
+
+Este software fue desarrollado específicamente para MEDINUCLEAR.
+Redistribución no autorizada.
+
+Versión: 1.0.0
+Fecha: Junio 2025
+===============================================================

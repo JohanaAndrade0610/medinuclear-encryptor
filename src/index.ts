@@ -1,82 +1,79 @@
-import { FileEncryptionUseCase } from './FileEncryptionUseCase';
+import { FileEncryptionUseCase } from './usecases/FileEncryptionUseCase';
+import { BannerService } from './services/BannerService';
+import { MessagesService } from './services/MessagesService';
+import { UserInterfaceService } from './services/UserInterfaceService';
+import { LicenseManager } from './security/SimpleLicenseManager';
 import * as path from 'path';
 import * as fs from 'fs';
-import * as readline from 'readline';
 
-// Función para mostrar el banner de bienvenida
-function showWelcomeBanner(): void {
-  console.clear();
-  console.log('=======================================================================');
-  console.log('           BIENVENIDO AL SISTEMA DE ENCRIPTACION MEDINUCLEAR');
-  console.log('=======================================================================');
-  console.log('              Version 1.0.0 - Seguridad Garantizada');
-  console.log('=======================================================================');
-}
+// Variable global para el banner service
+let globalBannerService: BannerService;
 
-// Función para solicitar la ruta de entrada
-function askForFolderPath(): Promise<string> {
-  const rl = readline.createInterface({
-    input: process.stdin,
-    output: process.stdout
-  });
-
-  return new Promise((resolve) => {
-    rl.question('[+] Ingrese la ruta completa de la carpeta a cifrar:\n> ', (answer) => {
-      rl.close();
-      resolve(answer.trim().replace(/"/g, '')); // Remover comillas si las hay
-    });
-  });
-}
-
-// Función para validar que la carpeta existe
-function validateFolderPath(folderPath: string): boolean {
-  if (!fs.existsSync(folderPath)) {
-    console.log(`[!] Error: La carpeta "${folderPath}" no existe.`);
-    return false;
+// Función para restaurar la terminal al salir
+function restoreTerminalOnExit() {
+  if (globalBannerService) {
+    globalBannerService.restoreTerminal();
   }
-
-  if (!fs.statSync(folderPath).isDirectory()) {
-    console.log(`[!] Error: "${folderPath}" no es una carpeta valida.`);
-    return false;
-  }
-
-  return true;
 }
 
-// Función para preguntar si desea continuar
-function askToContinue(): Promise<boolean> {
-  const rl = readline.createInterface({
-    input: process.stdin,
-    output: process.stdout
-  });
-
-  return new Promise((resolve) => {
-    rl.question('\n¿Desea cifrar otra carpeta? (S/N): ', (answer) => {
-      rl.close();
-      resolve(answer.toLowerCase().startsWith('s'));
-    });
-  });
-}
+// Configurar manejadores de eventos de salida
+process.on('exit', restoreTerminalOnExit);
+process.on('SIGINT', () => {
+  restoreTerminalOnExit();
+  process.exit(0);
+});
+process.on('SIGTERM', () => {
+  restoreTerminalOnExit();
+  process.exit(0);
+});
 
 // Función principal
 async function main(): Promise<void> {
-  showWelcomeBanner();
+  // Inicializar servicios
+  const bannerService = new BannerService();
+  globalBannerService = bannerService; // Asignar a la variable global
+  const messagesService = new MessagesService();
+  const uiService = new UserInterfaceService(messagesService, bannerService);
+  const licenseManager = new LicenseManager();
+  
+  // Mostrar banner de bienvenida
+  bannerService.showWelcomeBanner();
+
+  // Validar licencia antes de continuar
+  uiService.showLicenseValidationBanner();
+  
+  try {
+    const licenseValidation = await licenseManager.validateLicense();
+    
+    if (!licenseValidation.isValid) {
+      uiService.showAccessDeniedBanner(licenseValidation.message);
+      await uiService.showExitMessage();
+      process.exit(1);
+    }
+    
+    // Licencia válida, mostrar confirmación
+    uiService.showLicenseValidBanner();
+  } catch (error) {
+    uiService.showLicenseErrorBanner(String(error));
+    await uiService.showExitMessage();
+    process.exit(1);
+  }
   
   let continueProcessing = true;
 
   while (continueProcessing) {
     try {
-      const folderToEncrypt = await askForFolderPath();
+      const folderToEncrypt = await uiService.askForFolderPath();
       
       if (!folderToEncrypt) {
-        console.log('[!] No se proporciono una ruta valida.');
+        uiService.showInvalidPathMessage();
         continue;
       }
 
       const absoluteFolderPath = path.resolve(folderToEncrypt);
 
       // Validar que la carpeta existe
-      if (!validateFolderPath(absoluteFolderPath)) {
+      if (!uiService.validateFolderPath(absoluteFolderPath)) {
         continue;
       }
 
@@ -93,10 +90,8 @@ async function main(): Promise<void> {
         fs.mkdirSync(finalOutputFolder, { recursive: true });
       }
 
-      console.log('\n===============================================================');
-      console.log('[*] INICIANDO PROCESO DE CIFRADO...');
-      console.log('===============================================================');
-      console.log(`[+] Carpeta origen: ${absoluteFolderPath}`);
+      // Mostrar banner de inicio de proceso
+      uiService.showProcessStartBanner(absoluteFolderPath);
 
       const fileEncryptionUseCase = new FileEncryptionUseCase();
 
@@ -106,36 +101,24 @@ async function main(): Promise<void> {
       const endTime = Date.now();
       const duration = ((endTime - startTime) / 1000).toFixed(2);
 
-      console.log('\n===============================================================');
-      console.log('[+] PROCESO COMPLETADO EXITOSAMENTE!');
-      console.log('===============================================================');
-      console.log(`[+] Los archivos cifrados se encuentran en: ${finalOutputFolder}`);
-      console.log('===============================================================');
+      // Mostrar banner de proceso completado
+      uiService.showProcessCompletedBanner(finalOutputFolder);
 
       // Preguntar si desea continuar
-      continueProcessing = await askToContinue();
+      continueProcessing = await uiService.askToContinue();
 
     } catch (error) {
-      console.log('\n===============================================================');
-      console.log('[!] ERROR DURANTE EL CIFRADO');
-      console.log('===============================================================');
-      console.error('Detalles del error:', error);
-      console.log('===============================================================');
+      // Mostrar banner de error
+      uiService.showErrorBanner(error);
 
       // Preguntar si desea intentar con otra carpeta
-      continueProcessing = await askToContinue();
+      continueProcessing = await uiService.askToContinue();
     }
   }
 
-  console.log('\n[*] Gracias por usar el Sistema de Encriptado MEDINUCLEAR');
-  console.log('    Presione cualquier tecla para salir...');
-  
-  // Esperar input antes de cerrar
-  process.stdin.setRawMode(true);
-  process.stdin.resume();
-  process.stdin.on('data', () => {
-    process.exit(0);
-  });
+  // Mostrar mensaje de despedida y esperar tecla
+  await uiService.showExitMessage();
+  process.exit(0);
 }
 
 // Ejecutar la aplicación

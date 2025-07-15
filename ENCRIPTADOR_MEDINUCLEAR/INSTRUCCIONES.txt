@@ -1,0 +1,39 @@
+===============================================================
+          SISTEMA DE ENCRIPTADO MEDINUCLEAR v1.0.0
+===============================================================
+
+🔐 INSTRUCCIONES DE USO:
+
+1. EJECUTAR EL PROGRAMA:
+   - Eliminar la carpeta "tmp"
+   - Ejecutar "index-win.exe" como administrador
+   - NO mover ni eliminar la carpeta "secrets"
+
+2. CIFRAR ARCHIVOS:
+   - El programa pedirá la ruta de la carpeta a cifrar
+   - Ejemplo: C:\Documentos\Facturas
+   - También puede arrastrar la carpeta sobre la ventana
+
+3. RESULTADOS:
+   - Los archivos cifrados aparecerán en la carpeta "tmp"
+   - Cada archivo tendrá extensión .enc y .key
+
+4. REQUISITOS:
+   - Windows 7 o superior
+   - NO requiere instalación adicional
+   - NO requiere Node.js ni Visual Studio
+
+===============================================================
+                    SOPORTE TÉCNICO
+===============================================================
+
+📧 Para soporte contactar a: [angela.andr0610@gmail.com]
+📞 Teléfono: [3186875106]
+
+⚠️  IMPORTANTE:
+
+- Mantener siempre las carpetas "secrets" y "tmp" junto al ejecutable
+- Los archivos .key son necesarios para descifrar
+- Guardar una copia de seguridad de las llaves
+
+===============================================================
