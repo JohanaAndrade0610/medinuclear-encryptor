@@ -70,7 +70,9 @@ async function main(): Promise<void> {
         continue;
       }
 
-      const absoluteFolderPath = path.resolve(folderToEncrypt);
+      let absoluteFolderPath = path.isAbsolute(folderToEncrypt) 
+        ? folderToEncrypt 
+        : path.resolve(folderToEncrypt);
 
       // Validar que la carpeta existe
       if (!uiService.validateFolderPath(absoluteFolderPath)) {
@@ -101,8 +103,8 @@ async function main(): Promise<void> {
       const endTime = Date.now();
       const duration = ((endTime - startTime) / 1000).toFixed(2);
 
-      // Mostrar banner de proceso completado
-      uiService.showProcessCompletedBanner(finalOutputFolder);
+      // Mostrar banner de proceso completado y preguntar si quiere abrir la carpeta
+      await uiService.showProcessCompletedBanner(finalOutputFolder);
 
       // Preguntar si desea continuar
       continueProcessing = await uiService.askToContinue();
