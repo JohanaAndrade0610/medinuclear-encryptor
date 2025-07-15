@@ -125,7 +125,7 @@ export class UserInterfaceService {
     this.bannerService.showSectionSeparator();
     this.bannerService.showMessage(this.messagesService.getSuccess('processCompleted'), 'success');
     this.bannerService.showSectionSeparator();
-    this.bannerService.showMessage(this.messagesService.getSuccess('filesLocation', { path: outputPath }), 'info');
+    this.bannerService.showMessage(this.messagesService.getSuccess('filesLocation', { path: `\n${outputPath}` }), 'info');
     this.bannerService.showSectionSeparator();
 
     // Preguntar si quiere abrir la carpeta de destino
